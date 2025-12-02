@@ -1,1 +1,388 @@
 
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bloop - Le Lien Fluide</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        /* --- VARIABLES --- */
+        :root {
+            --primary: #C0583F; /* Terracotta */
+            --primary-dark: #a34630;
+            --bg-body: #FFFBF7; /* Crème très léger */
+            --bg-white: #FFFFFF;
+            --text-main: #2D2422;
+            --text-light: #665A56;
+            --radius-l: 24px;
+            --radius-m: 16px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* --- ANIMATIONS DOUCES --- */
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+
+        /* --- UI ELEMENTS --- */
+        .container {
+            max-width: 1080px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--primary);
+            color: white;
+            padding: 16px 32px;
+            border-radius: 50px;
+            font-weight: 700;
+            text-decoration: none;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            box-shadow: 0 4px 15px rgba(192, 88, 63, 0.2);
+            border: none;
+            cursor: pointer;
+            font-size: 1.1rem;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 8px 25px rgba(192, 88, 63, 0.3);
+            background-color: var(--primary-dark);
+        }
+
+        h2 {
+            font-size: 2.8rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            color: var(--text-main);
+            font-weight: 800;
+        }
+
+        .highlight {
+            color: var(--primary);
+        }
+
+        /* --- HERO HEADER --- */
+        header {
+            min-height: 85vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background: radial-gradient(circle at center, #ffece6 0%, var(--bg-body) 70%);
+            padding: 2rem;
+        }
+
+        .logo-wrap {
+            font-size: 5rem;
+            font-weight: 900;
+            color: var(--text-main);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            animation: fadeUp 0.8s ease-out;
+        }
+
+        .logo-o {
+            background: var(--primary);
+            color: white;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 14px;
+            font-size: 24px;
+            animation: float 4s ease-in-out infinite;
+        }
+
+        .hero-slogan {
+            font-size: 3.5rem;
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            animation: fadeUp 1s ease-out 0.2s backwards;
+        }
+
+        .hero-sub {
+            font-size: 1.3rem;
+            color: var(--text-light);
+            max-width: 600px;
+            margin-bottom: 2.5rem;
+            animation: fadeUp 1s ease-out 0.4s backwards;
+        }
+
+        /* --- MISSION (Clean Card Style) --- */
+        .mission-box {
+            background: var(--bg-white);
+            border-radius: var(--radius-l);
+            padding: 4rem;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.03);
+            margin-bottom: 6rem;
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .mission-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .tag-pill {
+            background: #ffece6;
+            color: var(--primary);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            display: inline-block;
+            margin-bottom: 1rem;
+        }
+
+        .check-list li {
+            list-style: none;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            font-weight: 500;
+        }
+        .check-list li::before {
+            content: '✓';
+            color: var(--primary);
+            font-weight: 900;
+            margin-right: 12px;
+            background: #ffece6;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+        }
+
+        /* --- BENTO GRID (Le truc cool de la V2 mais en propre) --- */
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            margin-bottom: 6rem;
+        }
+
+        .bento-card {
+            background: var(--bg-white);
+            padding: 2rem;
+            border-radius: var(--radius-m);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.02);
+            transition: transform 0.3s ease;
+            border: 1px solid rgba(0,0,0,0.03);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .bento-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(192, 88, 63, 0.1);
+            border-color: rgba(192, 88, 63, 0.2);
+        }
+
+        .bento-card.wide { grid-column: span 2; }
+        .bento-card.tall { grid-row: span 2; background: linear-gradient(135deg, var(--primary), #a34630); color: white; }
+        .bento-card.tall .bento-text { color: rgba(255,255,255,0.9); }
+        .bento-card.tall h3 { color: white; }
+
+        .bento-icon { font-size: 2.5rem; margin-bottom: 1rem; display: block; }
+        .bento-card h3 { font-size: 1.4rem; margin-bottom: 0.5rem; font-weight: 700; }
+        .bento-text { font-size: 1rem; color: var(--text-light); }
+
+        /* --- PROMESSE SECTION --- */
+        .promise-section {
+            text-align: center;
+            margin-bottom: 6rem;
+            padding: 4rem 0;
+            position: relative;
+        }
+
+        .quote-box {
+            font-size: 3rem;
+            font-weight: 900;
+            color: var(--primary);
+            margin: 2rem 0;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .feature-grid {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            margin-top: 3rem;
+        }
+
+        .feature-item {
+            flex: 1;
+            min-width: 250px;
+            text-align: left;
+            padding: 2rem;
+            background: white;
+            border-radius: var(--radius-m);
+            border-left: 4px solid var(--primary);
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            background: var(--text-main);
+            color: white;
+            padding: 4rem 2rem;
+            text-align: center;
+            border-radius: 40px 40px 0 0;
+        }
+
+        @media (max-width: 900px) {
+            .mission-content { grid-template-columns: 1fr; }
+            .bento-grid { grid-template-columns: 1fr; }
+            .bento-card.wide, .bento-card.tall { grid-column: auto; grid-row: auto; }
+            .logo-wrap { font-size: 3.5rem; }
+            .hero-slogan { font-size: 2.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo-wrap">
+            Bloop<div class="logo-o">▶</div>
+        </div>
+        <h1 class="hero-slogan">
+            Tu shoots, <span class="highlight">je Bloop.</span>
+        </h1>
+        <p class="hero-sub">
+            Le lien fluide de la création. Nous connectons créateurs et monteurs pour des formats courts percutants. Sans friction.
+        </p>
+        <a href="#start" class="btn">🚀 Lancer un projet</a>
+    </header>
+
+    <div class="container">
+        
+        <div class="mission-box">
+            <div class="mission-content">
+                <div>
+                    <span class="tag-pill">Notre Mission</span>
+                    <h2 style="text-align: left; margin-bottom: 1.5rem; font-size: 2.2rem;">Faciliter. Sécuriser. Fluidifier.</h2>
+                    <p style="color: var(--text-light); margin-bottom: 1.5rem;">
+                        Nous aidons les créateurs (Reels, Shorts) à gagner du temps et les monteurs à trouver des projets sérieux.
+                    </p>
+                    <p style="font-weight: 700;">
+                        Bloop est le tiers de confiance qui s'assure que personne ne perd son temps.
+                    </p>
+                </div>
+                <div style="background: #FFF8F5; padding: 2rem; border-radius: 20px;">
+                    <h3 style="margin-bottom: 1.5rem;">✨ La garantie Bloop</h3>
+                    <ul class="check-list">
+                        <li>Brief complet & aligné</li>
+                        <li>Sélection "sur-mesure" des talents</li>
+                        <li>Paiement sécurisé (Fonds bloqués)</li>
+                        <li>Contrat clair pour les deux parties</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <h2 class="highlight">🧭 L'ADN Bloop</h2>
+        <div class="bento-grid">
+            
+            <div class="bento-card wide">
+                <span class="bento-icon">❤️</span>
+                <h3>1. Humanité</h3>
+                <p class="bento-text">Au cœur de Bloop, il y a l’humain. Nous veillons à un cadre serein, où créateurs et monteurs travaillent avec confiance. Pas de pression inutile.</p>
+            </div>
+
+            <div class="bento-card tall">
+                <span class="bento-icon">💧</span>
+                <h3>4. Fluidité</h3>
+                <p class="bento-text">Le chemin le plus simple entre un rush et une vidéo publiée.</p>
+                <div style="margin-top: auto; padding-top: 2rem; font-weight: bold; opacity: 0.9;">
+                    Brief → Sélection → Création → Validation
+                </div>
+            </div>
+
+            <div class="bento-card">
+                <span class="bento-icon">⚖️</span>
+                <h3>3. Équité</h3>
+                <p class="bento-text">Prix responsable, paiement juste. Commission Bloop max 15% pour les <strong>artisans du web</strong>.</p>
+            </div>
+
+            <div class="bento-card">
+                <span class="bento-icon">🛡️</span>
+                <h3>2. Transparence</h3>
+                <p class="bento-text">Briefs précis, contrats simples. Le créateur est protégé. Le monteur est protégé.</p>
+            </div>
+            
+            <div class="bento-card">
+                <span class="bento-icon">🔒</span>
+                <h3>5. Sécurité</h3>
+                <p class="bento-text">Paiement sous séquestre. L'argent n'est versé qu'une fois le travail validé.</p>
+            </div>
+
+        </div>
+
+        <div class="promise-section">
+            <h2 style="font-size: 2rem;">La Promesse :<br>L’Humain au cœur de la Création</h2>
+            <p style="max-width: 700px; margin: 0 auto; color: var(--text-light);">
+                Pour nous, la technologie doit soutenir l’humain — jamais le remplacer.
+            </p>
+
+            <div class="feature-grid">
+                <div class="feature-item">
+                    <h3>🤝 Relation Vivante</h3>
+                    <p style="font-size: 0.95rem; margin-top: 0.5rem;">Un conseiller pour le Client, une épaule pour le Monteur. Tout passe par l'écoute.</p>
+                </div>
+                <div class="feature-item">
+                    <h3>🎨 Artisans du Web</h3>
+                    <p style="font-size: 0.95rem; margin-top: 0.5rem;">Nous valorisons le talent. Une rémunération juste et stable pour des créations uniques.</p>
+                </div>
+                <div class="feature-item">
+                    <h3>🔎 Franchise Absolue</h3>
+                    <p style="font-size: 0.95rem; margin-top: 0.5rem;">Pas de zones grises. La qualité est vérifiée, le paiement sécurisé.</p>
+                </div>
+            </div>
+
+            <div class="quote-box">
+                « Tu shoots, je Bloop. »
+            </div>
+        </div>
+
+    </div>
+
+    <footer id="start">
+        <h2 style="color: white; margin-bottom: 1rem;">Prêt à simplifier votre création ?</h2>
+        <p style="opacity: 0.8; margin-bottom: 2rem;">Rejoignez le mouvement Bloop dès aujourd'hui.</p>
+        <button class="btn" style="background: white; color: var(--primary);">Commencer l'expérience</button>
+        <p style="margin-top: 3rem; font-size: 0.8rem; opacity: 0.5;">© 2024 Bloop. Humanité — Transparence — Équité.</p>
+    </footer>
+
+</body>
+</html>
